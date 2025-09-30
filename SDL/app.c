@@ -10,8 +10,6 @@
 #define DYING 1
 #define ALIVE 2
 
-int data[2][ROWS][COLS];
-
 
 void draw_cell(int row, int col, int color) {
   for (int i = 0; i < CELL_SIZE; ++i) {
@@ -23,6 +21,8 @@ void draw_cell(int row, int col, int color) {
 
 
 void app() {
+  
+int data[2][ROWS][COLS];
 
   for (int i = ROWS / 2 - 4; i < ROWS / 2 + 4; ++i) {
     for (int j = ROWS / 2 - 4; j < ROWS / 2 + 4; ++j) {
