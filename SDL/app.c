@@ -1,6 +1,6 @@
 #include "sim.h"
 
-#define CELL_SIZE 4
+#define CELL_SIZE 8
 #define ROWS (SIM_X_SIZE / CELL_SIZE)
 #define COLS (SIM_Y_SIZE / CELL_SIZE)
 #define COLOR_DEAD 0xff000000
@@ -22,10 +22,15 @@ void draw_cell(int row, int col, int color) {
 
 void app() {
   
-int data[2][ROWS][COLS];
+  int data[2][ROWS][COLS];
+  for (int i = 0; i < ROWS; ++i) {
+    for (int j = 0; j < COLS; ++j) {
+      data[0][i][j] = data[1][i][j] = DEAD;
+    }
+  }
 
   for (int i = ROWS / 2 - 4; i < ROWS / 2 + 4; ++i) {
-    for (int j = ROWS / 2 - 4; j < ROWS / 2 + 4; ++j) {
+    for (int j = COLS / 2 - 4; j < COLS / 2 + 4; ++j) {
         if (((i * j) >> 3) & 1) {
           data[0][i][j] = ALIVE;
         }
@@ -33,11 +38,19 @@ int data[2][ROWS][COLS];
   }
 
   int step = 0;
+  int t = 0;
   while (1) {
+    if (t == 3) {
+      break;
+    }
+    ++t;
 
     for (int r = 0; r < ROWS; ++r) {
       for (int c = 0;c < COLS; ++c) {
         int cur = data[step][r][c];
+        if (cur == data[1 - step][r][c]) {
+          continue;
+        }
         int color = DEAD;
         if (cur == ALIVE) {
           color = COLOR_ALIVE;
