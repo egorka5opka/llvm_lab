@@ -127,49 +127,45 @@ struct MyModPass : public PassInfoMixin<MyModPass> {
   }
 
   bool insertOptLogs(Module &M, Function &F, IRBuilder<> &builder) {
-    FunctionCallee operandLogger[7] = {
-      M.getOrInsertFunction("operand0Logger", FunctionType::get(voidType, {int8PtrTy,int8PtrTy}, false)),
-      M.getOrInsertFunction("operand1Logger", FunctionType::get(voidType, {int8PtrTy, int64Ty}, false)),
-      M.getOrInsertFunction("operand2Logger", FunctionType::get(voidType, {int8PtrTy, int8PtrTy, int8PtrTy, int8PtrTy}, false)),
-      M.getOrInsertFunction("operand3Logger", FunctionType::get(voidType, {int8PtrTy, int64Ty, int64Ty, int64Ty}, false)),
-      M.getOrInsertFunction("operand4Logger", FunctionType::get(voidType, {int8PtrTy, int64Ty, int64Ty, int64Ty, int64Ty}, false)),
-      M.getOrInsertFunction("operand5Logger", FunctionType::get(voidType, {int8PtrTy, int64Ty, int64Ty, int64Ty, int64Ty, int64Ty}, false)),
-      M.getOrInsertFunction("operand6Logger", FunctionType::get(voidType, {int8PtrTy, int64Ty, int64Ty, int64Ty, int64Ty, int64Ty, int64Ty}, false)),
-    };
+
+    FunctionCallee useLogger = M.getOrInsertFunction("useLogger", FunctionType::get(voidType, {int8PtrTy, int8PtrTy}, false));
 
     bool Inserted = false;
-    // Insert loggers for call, binOpt and ret instructions
     for (auto &B : F) {
       for (auto &I : B) {
-        outs() << I.getOpcodeName() << " " << getName(&I);
         if (dyn_cast<PHINode>(&I)) {
-          outs() << "SHEEEES";
-        }
-      
-        outs() << "\n";
-        
-        int operands_cnt = I.getNumOperands();
-        if (operands_cnt != 0 && operands_cnt != 2) {
           continue;
         }
-        std::string varNameStr = getName(&I);
-        if (varNameStr == "<badref>") {
-          varNameStr = "";
-        }
+        int operands_cnt = I.getNumOperands();
         Value *opName = builder.CreateGlobalStringPtr(I.getOpcodeName());
-        Value *varName = builder.CreateGlobalStringPtr(varNameStr);
         builder.SetInsertPoint(&I);
         builder.SetInsertPoint(&B, builder.GetInsertPoint());
         
-        std::vector<Value*> args;
-        args.push_back(varName);
-        args.push_back(opName);
         for (int i = 0; i < operands_cnt; ++i) {
           Value *op = I.getOperand(i);
 
-          args.push_back(builder.CreateGlobalStringPtr(getName(op)));
+          std::string opNameStr;
+
+          if (Instruction *opI = dyn_cast<Instruction>(op)) {
+            opNameStr = opI->getOpcodeName();
+          } else if (Argument *arg = dyn_cast<Argument>(op)) {
+            if (arg->hasName())
+              opNameStr = arg->getName().str();
+            else
+              opNameStr = "arg";
+          } else if (ConstantInt *ci = dyn_cast<ConstantInt>(op)) {
+            opNameStr = std::to_string(ci->getSExtValue());
+          } else {
+            std::string tmp;
+            raw_string_ostream rso(tmp);
+            op->printAsOperand(rso, false);
+            opNameStr = rso.str();
+          }
+
+          Value *opNameGV = builder.CreateGlobalStringPtr(opNameStr);
+          builder.CreateCall(useLogger, {opName, opNameGV});
+
         }
-        builder.CreateCall(operandLogger[operands_cnt], args);
 
         Inserted = true;
       }
@@ -205,11 +201,6 @@ struct MyModPass : public PassInfoMixin<MyModPass> {
         continue;
       }
 
-
-      // if (insertCallLog(M, F, builder)) {
-      //   outs() << "insertCallLog done\n";
-      // }
-
       if (insertFuncEndLog(M, F, builder)) {
         outs() << "insertFuncEndLog done\n";
       }
@@ -223,8 +214,8 @@ struct MyModPass : public PassInfoMixin<MyModPass> {
       }
 
       outs() << '\n';
-      // bool verif = verifyFunction(F, &outs());
-      // outs() << "[VERIFICATION] " << (verif ? "FAIL\n\n" : "OK\n\n");
+      bool verif = verifyFunction(F, &outs());
+      outs() << "[VERIFICATION] " << (verif ? "FAIL\n\n" : "OK\n\n");
     }
     outs() << '\n';
     return PreservedAnalyses::none();

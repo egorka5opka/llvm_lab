@@ -40,7 +40,7 @@ void app() {
   int step = 0;
   int t = 0;
   while (1) {
-    if (t == 3) {
+    if (t == 2) {
       break;
     }
     ++t;
