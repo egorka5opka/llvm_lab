@@ -1,0 +1,135 @@
+========================1==================
+icmp <- load
+times: 271146
+
+getelementptr <- sext
+times: 333899
+
+getelementptr <- 0
+times: 346239
+
+add <- load
+times: 425694
+
+load <- alloca
+times: 834529
+
+
+========================2==================
+load <- alloca
+icmp <- load
+times: 181709
+
+getelementptr <- sext
+load <- alloca
+times: 219860
+
+getelementptr <- getelementptr
+getelementptr <- 0
+times: 228078
+
+load <- alloca
+add <- load
+times: 269988
+
+getelementptr <- 0
+getelementptr <- sext
+times: 333899
+
+
+========================3==================
+srem <- add
+srem <- 64
+sext <- srem
+times: 146106
+
+srem <- 64
+sext <- srem
+getelementptr <- getelementptr
+times: 146106
+
+sext <- srem
+getelementptr <- getelementptr
+getelementptr <- 0
+times: 146106
+
+getelementptr <- 0
+getelementptr <- sext
+load <- alloca
+times: 219860
+
+getelementptr <- getelementptr
+getelementptr <- 0
+getelementptr <- sext
+times: 228078
+
+
+========================4==================
+add <- add
+add <- 64
+srem <- add
+srem <- 64
+times: 146106
+
+add <- 64
+srem <- add
+srem <- 64
+sext <- srem
+times: 146106
+
+srem <- add
+srem <- 64
+sext <- srem
+getelementptr <- getelementptr
+times: 146106
+
+srem <- 64
+sext <- srem
+getelementptr <- getelementptr
+getelementptr <- 0
+times: 146106
+
+sext <- srem
+getelementptr <- getelementptr
+getelementptr <- 0
+getelementptr <- sext
+times: 146106
+
+
+========================5==================
+add <- load
+add <- add
+add <- 64
+srem <- add
+srem <- 64
+times: 146106
+
+add <- add
+add <- 64
+srem <- add
+srem <- 64
+sext <- srem
+times: 146106
+
+add <- 64
+srem <- add
+srem <- 64
+sext <- srem
+getelementptr <- getelementptr
+times: 146106
+
+srem <- add
+srem <- 64
+sext <- srem
+getelementptr <- getelementptr
+getelementptr <- 0
+times: 146106
+
+srem <- 64
+sext <- srem
+getelementptr <- getelementptr
+getelementptr <- 0
+getelementptr <- sext
+times: 146106
+
+

@@ -16,3 +16,6 @@ irtrace:
 	make -C pass/build
 	clang -O2 -fpass-plugin=./pass/build/libMyPass.so pass/log.c SDL/sim.c SDL/app.c SDL/start.c -lSDL2 -iquote /usr/include/SDL2 -o out/traced_brain
 	./out/traced_brain > pass/IRtrace.log
+	
+analysepass:
+	python3 pass/analyse.py > pass/frequency.log
