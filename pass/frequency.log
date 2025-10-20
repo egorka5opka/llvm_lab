@@ -1,135 +1,135 @@
 ========================1==================
-icmp <- load
-times: 271146
+load <- getelementptr
+times: 97629
 
-getelementptr <- sext
-times: 333899
+getelementptr <- zext
+times: 105821
+
+getelementptr <- alloca
+times: 107889
 
 getelementptr <- 0
-times: 346239
+times: 108017
 
-add <- load
-times: 425694
-
-load <- alloca
-times: 834529
+getelementptr <- and
+times: 146106
 
 
 ========================2==================
-load <- alloca
-icmp <- load
-times: 181709
+getelementptr <- zext
+getelementptr <- and
+times: 73053
 
-getelementptr <- sext
-load <- alloca
-times: 219860
+getelementptr <- and
+getelementptr <- and
+times: 73053
 
-getelementptr <- getelementptr
-getelementptr <- 0
-times: 228078
-
-load <- alloca
-add <- load
-times: 269988
+getelementptr <- and
+load <- getelementptr
+times: 73053
 
 getelementptr <- 0
-getelementptr <- sext
-times: 333899
+getelementptr <- zext
+times: 105821
+
+getelementptr <- alloca
+getelementptr <- 0
+times: 107889
 
 
 ========================3==================
-srem <- add
-srem <- 64
-sext <- srem
-times: 146106
-
-srem <- 64
-sext <- srem
-getelementptr <- getelementptr
-times: 146106
-
-sext <- srem
-getelementptr <- getelementptr
+load <- getelementptr
+getelementptr <- alloca
 getelementptr <- 0
-times: 146106
+times: 48777
 
 getelementptr <- 0
-getelementptr <- sext
-load <- alloca
-times: 219860
+getelementptr <- zext
+getelementptr <- and
+times: 73053
 
-getelementptr <- getelementptr
+getelementptr <- zext
+getelementptr <- and
+getelementptr <- and
+times: 73053
+
+getelementptr <- and
+getelementptr <- and
+load <- getelementptr
+times: 73053
+
+getelementptr <- alloca
 getelementptr <- 0
-getelementptr <- sext
-times: 228078
+getelementptr <- zext
+times: 105821
 
 
 ========================4==================
-add <- add
-add <- 64
-srem <- add
-srem <- 64
-times: 146106
-
-add <- 64
-srem <- add
-srem <- 64
-sext <- srem
-times: 146106
-
-srem <- add
-srem <- 64
-sext <- srem
-getelementptr <- getelementptr
-times: 146106
-
-srem <- 64
-sext <- srem
-getelementptr <- getelementptr
+getelementptr <- and
+load <- getelementptr
+getelementptr <- alloca
 getelementptr <- 0
-times: 146106
+times: 40585
 
-sext <- srem
-getelementptr <- getelementptr
+load <- getelementptr
+getelementptr <- alloca
 getelementptr <- 0
-getelementptr <- sext
-times: 146106
+getelementptr <- zext
+times: 48777
+
+getelementptr <- alloca
+getelementptr <- 0
+getelementptr <- zext
+getelementptr <- and
+times: 73053
+
+getelementptr <- 0
+getelementptr <- zext
+getelementptr <- and
+getelementptr <- and
+times: 73053
+
+getelementptr <- zext
+getelementptr <- and
+getelementptr <- and
+load <- getelementptr
+times: 73053
 
 
 ========================5==================
-add <- load
-add <- add
-add <- 64
-srem <- add
-srem <- 64
-times: 146106
-
-add <- add
-add <- 64
-srem <- add
-srem <- 64
-sext <- srem
-times: 146106
-
-add <- 64
-srem <- add
-srem <- 64
-sext <- srem
-getelementptr <- getelementptr
-times: 146106
-
-srem <- add
-srem <- 64
-sext <- srem
-getelementptr <- getelementptr
+getelementptr <- and
+getelementptr <- and
+load <- getelementptr
+getelementptr <- alloca
 getelementptr <- 0
-times: 146106
+times: 40585
 
-srem <- 64
-sext <- srem
-getelementptr <- getelementptr
+getelementptr <- and
+load <- getelementptr
+getelementptr <- alloca
 getelementptr <- 0
-getelementptr <- sext
-times: 146106
+getelementptr <- zext
+times: 40585
+
+load <- getelementptr
+getelementptr <- alloca
+getelementptr <- 0
+getelementptr <- zext
+getelementptr <- and
+times: 40585
+
+getelementptr <- alloca
+getelementptr <- 0
+getelementptr <- zext
+getelementptr <- and
+getelementptr <- and
+times: 73053
+
+getelementptr <- 0
+getelementptr <- zext
+getelementptr <- and
+getelementptr <- and
+load <- getelementptr
+times: 73053
 
 
