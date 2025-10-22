@@ -44,67 +44,67 @@ define void @app() {
   %3 = phi i64 [ 0, %0 ], [ %36, %2 ]
   %4 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 0
   store <4 x i32> zeroinitializer, ptr %4, align 16
-  %5 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 0
+  %5 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 0
   store <4 x i32> zeroinitializer, ptr %5, align 16
   %6 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 4
   store <4 x i32> zeroinitializer, ptr %6, align 16
-  %7 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 4
+  %7 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 4
   store <4 x i32> zeroinitializer, ptr %7, align 16
   %8 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 8
   store <4 x i32> zeroinitializer, ptr %8, align 16
-  %9 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 8
+  %9 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 8
   store <4 x i32> zeroinitializer, ptr %9, align 16
   %10 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 12
   store <4 x i32> zeroinitializer, ptr %10, align 16
-  %11 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 12
+  %11 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 12
   store <4 x i32> zeroinitializer, ptr %11, align 16
   %12 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 16
   store <4 x i32> zeroinitializer, ptr %12, align 16
-  %13 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 16
+  %13 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 16
   store <4 x i32> zeroinitializer, ptr %13, align 16
   %14 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 20
   store <4 x i32> zeroinitializer, ptr %14, align 16
-  %15 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 20
+  %15 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 20
   store <4 x i32> zeroinitializer, ptr %15, align 16
   %16 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 24
   store <4 x i32> zeroinitializer, ptr %16, align 16
-  %17 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 24
+  %17 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 24
   store <4 x i32> zeroinitializer, ptr %17, align 16
   %18 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 28
   store <4 x i32> zeroinitializer, ptr %18, align 16
-  %19 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 28
+  %19 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 28
   store <4 x i32> zeroinitializer, ptr %19, align 16
   %20 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 32
   store <4 x i32> zeroinitializer, ptr %20, align 16
-  %21 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 32
+  %21 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 32
   store <4 x i32> zeroinitializer, ptr %21, align 16
   %22 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 36
   store <4 x i32> zeroinitializer, ptr %22, align 16
-  %23 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 36
+  %23 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 36
   store <4 x i32> zeroinitializer, ptr %23, align 16
   %24 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 40
   store <4 x i32> zeroinitializer, ptr %24, align 16
-  %25 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 40
+  %25 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 40
   store <4 x i32> zeroinitializer, ptr %25, align 16
   %26 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 44
   store <4 x i32> zeroinitializer, ptr %26, align 16
-  %27 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 44
+  %27 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 44
   store <4 x i32> zeroinitializer, ptr %27, align 16
   %28 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 48
   store <4 x i32> zeroinitializer, ptr %28, align 16
-  %29 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 48
+  %29 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 48
   store <4 x i32> zeroinitializer, ptr %29, align 16
   %30 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 52
   store <4 x i32> zeroinitializer, ptr %30, align 16
-  %31 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 52
+  %31 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 52
   store <4 x i32> zeroinitializer, ptr %31, align 16
   %32 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 56
   store <4 x i32> zeroinitializer, ptr %32, align 16
-  %33 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 56
+  %33 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 56
   store <4 x i32> zeroinitializer, ptr %33, align 16
   %34 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 1, i64 %3, i64 60
   store <4 x i32> zeroinitializer, ptr %34, align 16
-  %35 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %3, i64 60
+  %35 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 %3, i64 60
   store <4 x i32> zeroinitializer, ptr %35, align 16
   %36 = add nuw nsw i64 %3, 1
   %37 = icmp eq i64 %36, 64
@@ -114,31 +114,31 @@ define void @app() {
   %39 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 28, i64 29
   store i32 2, ptr %39, align 4
   %40 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 28, i64 30
-  store i32 2, ptr %40, align 4
+  store i32 2, ptr %40, align 8
   %41 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 28, i64 33
   store i32 2, ptr %41, align 4
   %42 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 28, i64 34
-  store i32 2, ptr %42, align 4
+  store i32 2, ptr %42, align 8
   %43 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 29, i64 28
-  store i32 2, ptr %43, align 4
+  store i32 2, ptr %43, align 16
   %44 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 29, i64 29
   store i32 2, ptr %44, align 4
   %45 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 29, i64 33
   store i32 2, ptr %45, align 4
   %46 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 29, i64 34
-  store i32 2, ptr %46, align 4
+  store i32 2, ptr %46, align 8
   %47 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 30, i64 28
-  store i32 2, ptr %47, align 4
+  store i32 2, ptr %47, align 16
   %48 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 30, i64 33
   store i32 2, ptr %48, align 4
   %49 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 30, i64 34
-  store i32 2, ptr %49, align 4
+  store i32 2, ptr %49, align 8
   %50 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 30, i64 35
   store i32 2, ptr %50, align 4
   %51 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 31, i64 33
   store i32 2, ptr %51, align 4
   %52 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 31, i64 34
-  store i32 2, ptr %52, align 4
+  store i32 2, ptr %52, align 8
   %53 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 31, i64 35
   store i32 2, ptr %53, align 4
   %54 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 33, i64 28
@@ -146,7 +146,7 @@ define void @app() {
   %55 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 34, i64 28
   store <4 x i32> <i32 2, i32 2, i32 2, i32 2>, ptr %55, align 16
   %56 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 35, i64 30
-  store i32 2, ptr %56, align 4
+  store i32 2, ptr %56, align 8
   %57 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 35, i64 31
   store i32 2, ptr %57, align 4
   %58 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 35, i64 35
@@ -154,7 +154,7 @@ define void @app() {
   br label %62
 
 59:                                               ; preds = %98
-  %60 = add i32 %63, 1
+  %60 = add nuw nsw i32 %63, 1
   %61 = icmp eq i32 %60, 3
   br i1 %61, label %152, label %62
 
@@ -199,7 +199,7 @@ define void @app() {
   br label %88
 
 88:                                               ; preds = %82, %75
-  %89 = add i64 %76, 1
+  %89 = add nuw nsw i64 %76, 1
   %90 = icmp eq i64 %89, 64
   br i1 %90, label %72, label %75
 
@@ -208,12 +208,12 @@ define void @app() {
   %93 = add nuw nsw i64 %92, 63
   %94 = and i64 %93, 63
   %95 = and i64 %92, 63
-  %96 = and i64 %92, 1
+  %96 = add nuw i64 %92, 1
   %97 = and i64 %96, 63
   br label %101
 
 98:                                               ; preds = %147
-  %99 = add nuw i64 %92, 1
+  %99 = add nuw nsw i64 %92, 1
   %100 = icmp eq i64 %99, 64
   br i1 %100, label %59, label %91
 
@@ -234,7 +234,7 @@ define void @app() {
   %110 = and i64 %102, 63
   %111 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %65, i64 %94, i64 %110
   %112 = load i32, ptr %111, align 4
-  %113 = add i64 %102, 1
+  %113 = add nuw i64 %102, 1
   %114 = and i64 %113, 63
   %115 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %65, i64 %94, i64 %114
   %116 = load i32, ptr %115, align 4
@@ -288,5 +288,3 @@ define void @app() {
 declare i8 @llvm.ctpop.i8(i8) #0
 
 attributes #0 = { nocallback nofree nosync nounwind speculatable willreturn memory(none) }
-
-

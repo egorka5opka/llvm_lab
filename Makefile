@@ -19,3 +19,9 @@ irtrace:
 	
 analysepass:
 	python3 pass/analyse.py > pass/frequency.log
+
+irgen: 
+	clang++ `llvm-config --cppflags --ldflags --libs` IRGen/appgen.cpp SDL/sim.c  -iquote /usr/include/SDL2 -lSDL2 -o IRGen/genbrain.out
+	./IRGen/genbrain.out > IRGen/app.ll
+	clang `llvm-config --cppflags --ldflags --libs` SDL/start.c IRGen/app.ll SDL/sim.c  -iquote /usr/include/SDL2 -lSDL2 -o IRGen/brain.out
+	

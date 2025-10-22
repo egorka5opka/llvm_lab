@@ -16,6 +16,7 @@
 
 #include <unordered_map>
 #include <array>
+#include <iostream>
 
 using namespace llvm;
 using std::string;
@@ -241,7 +242,7 @@ int main()
                                                {zero64, builder.getInt64(1), var[3], builder.getInt64(2 * (i - 4))});
             builder.CreateStore(ZeroInit, var[i])->setAlignment(Align(16));
 
-            var[i + 1] = builder.CreateInBoundsGEP(dataArrayTy, var[1],
+            var[i + 1] = builder.CreateInBoundsGEP(MiddleArrayTy, var[1],
                                                    {zero64, var[3], builder.getInt64(2 * (i - 4))});
             builder.CreateStore(ZeroInit, var[i + 1])->setAlignment(Align(16));
         }
@@ -303,12 +304,13 @@ int main()
             {31, 34},
             {31, 35},
         };
+        std::array<int, 15> magic_align = {4, 8, 4, 8, 16, 4, 4, 8, 16, 4, 8, 4, 4, 8, 4};
 
         for (int i = 39; i <= 53; ++i)
         {
             var[i] = builder.CreateInBoundsGEP(MiddleArrayTy, var[1],
                                                {zero64, int64(magic[i - 39].first), int64(magic[i - 39].second)});
-            builder.CreateStore(builder.getInt32(2), var[i])->setAlignment(Align(4));
+            builder.CreateStore(builder.getInt32(2), var[i])->setAlignment(Align(magic_align[i - 39]));
         }
 
         VectorType *Vec4Ty = VectorType::get(intTy, 4, false);
@@ -327,7 +329,7 @@ int main()
         //   %56 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 35, i64 30
         var[56] = builder.CreateInBoundsGEP(MiddleArrayTy, var[1], {zero64, int64(35), int64(30)});
         //   store i32 2, ptr %56, align 8, !tbaa !7
-        builder.CreateStore(builder.getInt32(2), var[56])->setAlignment(Align(4));
+        builder.CreateStore(builder.getInt32(2), var[56])->setAlignment(Align(8));
 
         //   %57 = getelementptr inbounds [64 x [64 x i32]], ptr %1, i64 0, i64 35, i64 31
         var[57] = builder.CreateInBoundsGEP(MiddleArrayTy, var[1], {zero64, int64(35), int64(31)});
@@ -351,7 +353,7 @@ int main()
         // 59:                                               ; preds = %98
         builder.SetInsertPoint(BB59);
         //   %60 = add nuw nsw i32 %63, 1
-        var[60] = builder.CreateAdd(var[63], int32(1));
+        var[60] = builder.CreateAdd(var[63], int32(1), "", true, true);
         //   %61 = icmp eq i32 %60, 3
         var[61] = builder.CreateICmpEQ(var[60], int32(3));
         //   br i1 %61, label %152, label %62
@@ -448,7 +450,7 @@ int main()
         // 88:                                               ; preds = %75, %82
         builder.SetInsertPoint(BB88);
         //   %89 = add nuw nsw i64 %76, 1
-        var[89] = builder.CreateAdd(var[76], int64(1));
+        var[89] = builder.CreateAdd(var[76], int64(1), "", true, true);
         phi76->addIncoming(var[89], BB88);
         //   %90 = icmp eq i64 %89, 64
         var[90] = builder.CreateICmpEQ(var[89], int64(64));
@@ -468,7 +470,7 @@ int main()
         //   %95 = and i64 %92, 63
         var[95] = builder.CreateAnd(var[92], int64(63));
         //   %96 = add nuw i64 %92, 1
-        var[96] = builder.CreateAnd(var[92], int64(1));
+        var[96] = builder.CreateAdd(var[92], int64(1), "", true, false);
         //   %97 = and i64 %96, 63
         var[97] = builder.CreateAnd(var[96], int64(63));
         //   br label %101
@@ -477,7 +479,7 @@ int main()
         // 98:                                               ; preds = %147
         builder.SetInsertPoint(BB98);
         //   %99 = add nuw nsw i64 %92, 1
-        var[99] = builder.CreateAdd(var[92], int64(1), "", true);
+        var[99] = builder.CreateAdd(var[92], int64(1), "", true, true);
         phi92->addIncoming(var[99], BB98);
         //   %100 = icmp eq i64 %99, 64
         var[100] = builder.CreateICmpEQ(var[99], int64(64));
@@ -527,7 +529,7 @@ int main()
         load112->setAlignment(Align(4));
         var[112] = load112;
         //   %113 = add nuw i64 %102, 1
-        var[113] = builder.CreateAdd(var[102], int64(1));
+        var[113] = builder.CreateAdd(var[102], int64(1), "", true);
         //   %114 = and i64 %113, 63
         var[114] = builder.CreateAnd(var[113], 63);
         //   %115 = getelementptr inbounds [2 x [64 x [64 x i32]]], ptr %1, i64 0, i64 %65, i64 %94, i64 %114
@@ -673,28 +675,29 @@ int main()
 
     module->print(outs(), nullptr);
 
-    outs() << '\n';
     bool verif = verifyModule(*module, &errs());
-    outs() << "[VERIFICATION] " << (verif ? "FAIL\n\n" : "OK\n\n");
+    std::cerr << "[VERIFICATION] " << (verif ? "FAIL\n\n" : "OK\n\n");
 
-    // outs() << "[EE] Run\n";
-    // InitializeNativeTarget();
-    // InitializeNativeTargetAsmPrinter();
+    std::cerr << "[EE] Run\n";
+    InitializeNativeTarget();
+    InitializeNativeTargetAsmPrinter();
 
-    // ExecutionEngine *ee = EngineBuilder(std::unique_ptr<Module>(module)).create();
-    // ee->InstallLazyFunctionCreator([](const std::string &fnName) -> void *
-    //                                {
-    // if (fnName == "simPutPixel") {
-    //   return reinterpret_cast<void *>(simPutPixel);
-    // }
-    // if (fnName == "simFlush") {
-    //     return reinterpret_cast<void *>(simFlush);
-    // }
-    // return nullptr; });
-    // ee->finalizeObject();
-    // ArrayRef<GenericValue> noargs;
-    // GenericValue v = ee->runFunction(appFunc, noargs);
-    // outs() << "[EE] Result: " << v.IntVal << '\n';
+    ExecutionEngine *ee = EngineBuilder(std::unique_ptr<Module>(module)).create();
+    ee->InstallLazyFunctionCreator([](const std::string &fnName) -> void *
+                                   {
+    if (fnName == "simPutPixel") {
+      return reinterpret_cast<void *>(simPutPixel);
+    }
+    if (fnName == "simFlush") {
+        return reinterpret_cast<void *>(simFlush);
+    }
+    return nullptr; });
+    ee->finalizeObject();
+    ArrayRef<GenericValue> noargs;
+    simInit();
+    GenericValue v = ee->runFunction(appFunc, noargs);
+    simExit();
+    std::cerr << "[EE] Result: " << v.IntVal.getSExtValue() << '\n';
 
     return 0;
 }
