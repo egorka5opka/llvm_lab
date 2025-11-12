@@ -1,6 +1,8 @@
 #include "../SDL/sim.h"
 #include <cstdint>
 
+void draw_cell(int row, int col, int color);
+
 void do_DRAWC(int row, int col, int color);
 
 void do_FLUSH();

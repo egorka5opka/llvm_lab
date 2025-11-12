@@ -9,6 +9,7 @@ uint32_t data[2][64][64];
 #define CELL_SIZE 8
 
 void draw_cell(int row, int col, int color) {
+    // std::cerr << row << " " << col << " " << color << std::endl;
     for (int i = 0; i < CELL_SIZE; ++i) {
         for (int j = 0; j < CELL_SIZE; ++j) {
             simPutPixel(row * CELL_SIZE + i, col * CELL_SIZE + j, color);
@@ -60,7 +61,7 @@ void do_READ(int dst, int i, int row, int col) {
 }
 
 void do_DUMP() {
-    std::cout << "DUMP:\n";
+    std::cout << "DUMP" << std::endl;
     for (int i = 0; i < REG_FILE_SIZE; ++i) {
         std::cout << i << "=\t" << REG_FILE[i] << std::endl;
     }

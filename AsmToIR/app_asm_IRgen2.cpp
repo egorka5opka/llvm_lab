@@ -37,6 +37,7 @@ std::unordered_set<std::string> INSTR = {
 };
 
 const int REG_FILE_SIZE = 16;
+extern uint32_t REG_FILE[REG_FILE_SIZE];
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
@@ -59,9 +60,12 @@ int main(int argc, char* argv[]) {
     auto int32Type = builder.getInt32Ty();
 
     ArrayType* regFileType = ArrayType::get(int32Type, REG_FILE_SIZE);
-    GlobalVariable* regFile = new GlobalVariable(
-        *module, regFileType, false, GlobalValue::PrivateLinkage, 0, "regFile");
-    regFile->setInitializer(ConstantAggregateZero::get(regFileType));
+    // GlobalVariable* regFile = new GlobalVariable(
+    //     *module, regFileType, false, GlobalValue::PrivateLinkage, 0, "regFile");
+    // regFile->setInitializer(ConstantAggregateZero::get(regFileType));
+
+    module->getOrInsertGlobal("regFile", regFileType);
+    GlobalVariable* regFile = module->getNamedGlobal("regFile");
 
     // declare void @main()
     FunctionType* funcType = FunctionType::get(builder.getVoidTy(), false);
@@ -97,7 +101,7 @@ int main(int argc, char* argv[]) {
     // Functions
     FunctionCallee simFlushFunc = module->getOrInsertFunction("simFlush", voidFuncType);
     FunctionCallee do_DUMPFunc = module->getOrInsertFunction("do_DUMP", voidFuncType);
-    FunctionCallee do_DRAWCFunc = module->getOrInsertFunction("do_DRAWC", FunctionType::get(voidType, int32x3Types, false));
+    FunctionCallee draw_cellFunc = module->getOrInsertFunction("draw_cell", FunctionType::get(voidType, int32x3Types, false));
 
     input.open(argv[1]);
 
@@ -166,7 +170,7 @@ int main(int argc, char* argv[]) {
                 Value* r = parseArg(arg_r);
                 Value* c = parseArg(arg_c);
                 Value* color = parseArg(arg_color);
-                builder.CreateCall(do_DRAWCFunc, { r, c, color });
+                builder.CreateCall(draw_cellFunc, { r, c, color });
             } else if (name == "STORE") {
                 std::string arg_i, arg_row, arg_col, arg_val;
                 ss >> arg_i >> arg_row >> arg_col >> arg_val;
@@ -174,7 +178,7 @@ int main(int argc, char* argv[]) {
                 auto row = parseArg(arg_row);
                 auto col = parseArg(arg_col);
                 auto val = parseArg(arg_val);
-                auto dst = builder.CreateGEP(dataArrayTy, dataArr, {i, row, col});
+                auto dst = builder.CreateGEP(dataArrayTy, dataArr, { zero64, i, row, col });
                 builder.CreateStore(val, dst);
             } else if (name == "MOV") {
                 std::string arg_dst, arg_src;
@@ -191,7 +195,7 @@ int main(int argc, char* argv[]) {
                 auto cur = builder.CreateLoad(int32Type, reg);
                 auto inc = builder.CreateAdd(cur, builder.getInt32(1));
                 builder.CreateStore(inc, reg);
-                auto eq = builder.CreateICmpEQ(inc, b);
+                auto eq = builder.CreateICmpSLT(inc, b);
                 builder.CreateStore(eq, dst);
             } else if (name == "READ") {
                 std::string arg_dst, arg_i, arg_row, arg_col;
@@ -200,7 +204,7 @@ int main(int argc, char* argv[]) {
                 auto i = parseArg(arg_i);
                 auto row = parseArg(arg_row);
                 auto col = parseArg(arg_col);
-                auto src = builder.CreateGEP(dataArrayTy, dataArr, {i, row, col});
+                auto src = builder.CreateGEP(dataArrayTy, dataArr, {zero64,  i, row, col });
                 auto val = builder.CreateLoad(int32Type, src);
                 builder.CreateStore(val, dst);
             } else if (name == "SELECTEQ") {
@@ -230,9 +234,8 @@ int main(int argc, char* argv[]) {
                 auto a = parseArg(arg_a);
                 auto b = parseArg(arg_b);
                 auto c = parseArg(arg_c);
-                auto s = builder.CreateICmpEQ(a, b);
-                auto s_i32 = builder.CreateZExt(s, int32Type);
-                auto res = builder.CreateAnd(s_i32, c);
+                auto s = builder.CreateAdd(a, b);
+                auto res = builder.CreateAnd(s, c);
                 builder.CreateStore(res, dst);
             } else if (name == "ADD") {
                 std::string arg_dst, arg_a, arg_b;
@@ -281,12 +284,15 @@ int main(int argc, char* argv[]) {
         if (fnName == "simFlush") {
         return reinterpret_cast<void *>(simFlush);
         }
-    if(fnName == "do_DUMP") {
-    return reinterpret_cast<void *>(do_DUMP);
-    }
+        if(fnName == "draw_cell") {
+        return reinterpret_cast<void *>(draw_cell);
+        }
+        if (fnName == "do_DUMP") {
+        return reinterpret_cast<void *>(do_DUMP);
+        }
     return nullptr; });
 
-    // ee->addGlobalMapping(regFile, (void *)REG_FILE);
+    ee->addGlobalMapping(regFile, (void *)REG_FILE);
     ee->finalizeObject();
 
     simInit();
