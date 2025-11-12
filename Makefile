@@ -25,7 +25,10 @@ irgen:
 	./IRGen/genbrain.out > IRGen/app.ll
 	clang `llvm-config --cppflags --ldflags --libs` SDL/start.c IRGen/app.ll SDL/sim.c  -iquote /usr/include/SDL2 -lSDL2 -o IRGen/brain.out
 
-asm_to_ir:
+asm_to_ir1:
 	clang++ `llvm-config --cppflags --ldflags --libs` AsmToIR/app_asm_IRgen1.cpp AsmToIR/INSTR.cpp SDL/sim.c  -iquote /usr/include/SDL2 -lSDL2 -o AsmToIR/genbrain.out
 	./AsmToIR/genbrain.out ./AsmToIR/asm_app.s ./AsmToIR/app1.ll
-# 	clang `llvm-config --cppflags --ldflags --libs`  AsmToIR/INSTR.cpp SDL/start.c AsmToIR/app1.ll SDL/sim.c  -iquote /usr/include/SDL2 -lSDL2 -o AsmToIR/brain.out
+	
+asm_to_ir2:
+	clang++ `llvm-config --cppflags --ldflags --libs` AsmToIR/app_asm_IRgen2.cpp AsmToIR/INSTR.cpp SDL/sim.c  -iquote /usr/include/SDL2 -lSDL2 -o AsmToIR/genbrain2.out
+	./AsmToIR/genbrain2.out ./AsmToIR/asm_app.s ./AsmToIR/app2.ll

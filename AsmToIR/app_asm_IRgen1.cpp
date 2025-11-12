@@ -18,15 +18,6 @@
 #include <unordered_set>
 using namespace llvm;
 
-//    XOR x1 x1 x1
-//    MUL x3 x2 x1
-//    SUBi x6 x6 16777216
-//    PUT_PIXEL x5 x2 x6
-//    INC_NEi x4 x5 512
-//    BR_COND x4 label_13
-//    FLUSH
-//    EXIT
-
 const int REG_FILE_SIZE = 16;
 extern uint32_t REG_FILE[REG_FILE_SIZE];
 
