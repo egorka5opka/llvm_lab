@@ -32,3 +32,15 @@ make analysepass
 ```
 make IRGen
 ```
+
+# HW 4 - ASM to IR
+
+[ISA](AsmToIR/ISA.md)
+
+[Генератор с do_INSTR](AsmToIR/app_asm_IRgen1.cpp)
+
+Я решил сделать всю функцию `draw_cell` одной командой в ISA, потому что она идейно связана с графикой, а не логикой отрисовки, надо было изначально её добавить в `sim.h`.
+
+```
+make asm_to_ir
+```
