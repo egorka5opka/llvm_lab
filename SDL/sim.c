@@ -63,3 +63,13 @@ int simRand()
 {
     return rand();
 }
+
+#define CELL_SIZE 8
+
+void draw_cell(int row, int col, int color) {
+    for (int i = 0; i < CELL_SIZE; ++i) {
+        for (int j = 0; j < CELL_SIZE; ++j) {
+            simPutPixel(row * CELL_SIZE + i, col * CELL_SIZE + j, color);
+        }
+    }
+}

@@ -1,0 +1,61 @@
+whirl (#row in [0, 64)) (#col in [0, 64)) {
+    crave 0 #row #col 0
+}
+
+crave 0 28 29 2
+crave 0 28 30 2
+crave 0 28 33 2
+crave 0 28 34 2
+crave 0 29 28 2
+crave 0 29 29 2
+crave 0 29 33 2
+crave 0 29 34 2
+crave 0 30 28 2
+crave 0 30 33 2
+crave 0 30 34 2
+crave 0 30 35 2
+crave 0 31 33 2
+crave 0 31 34 2
+crave 0 31 35 2
+crave 0 33 28 2
+crave 0 33 29 2
+crave 0 33 30 2
+crave 0 33 31 2
+crave 0 34 28 2
+crave 0 34 29 2
+crave 0 34 30 2
+crave 0 34 31 2
+crave 0 35 30 2
+crave 0 35 31 2
+crave 0 35 35 2
+
+wish #step 0
+
+portal {
+    whirl (#row in [0, 64)) (#col in [0, 64)) {
+        wish #cell (detect #step #row #col)
+        wish #color (focus (#cell == 1) -13041685 0)
+        wish #color (focus (#cell == 2) 16777215 #color)
+        minor_image #row #col #color
+    }
+
+    illusion
+
+    wish #next_step ((#step + 1) & 1)
+
+    whirl (#row in [0, 64)) (#col in [0, 64)) {
+        wish #cell (detect #step #row #col)
+        wish #state (focus (#cell == 2) 1 3)
+        wish #state (focus (#cell == 1) 0 #state)
+        wonder (#state == 3) {
+            wish #cnt 0
+            wish #cnt (#cnt + ((detect #step ((#row + 1) & 63) #col) == 2))
+            wish #cnt (#cnt + ((detect #step #row ((#col + 1) & 63)) == 2))
+            wish #cnt (#cnt + ((detect #step ((#row + 63) & 63) #col) == 2))
+            wish #cnt (#cnt + ((detect #step #row ((#col + 63) & 63)) == 2))
+            
+            wish #state (focus (#cnt == 2) 2 0)
+        }
+        crave #next_step #row #col #state
+    }
+}
