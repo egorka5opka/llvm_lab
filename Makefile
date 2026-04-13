@@ -32,3 +32,20 @@ asm_to_ir1:
 asm_to_ir2:
 	clang++ `llvm-config --cppflags --ldflags --libs` AsmToIR/app_asm_IRgen2.cpp AsmToIR/INSTR.cpp SDL/sim.c  -iquote /usr/include/SDL2 -lSDL2 -o AsmToIR/genbrain2.out
 	./AsmToIR/genbrain2.out ./AsmToIR/asm_app.s ./AsmToIR/app2.ll
+
+spellcast2_frontend:
+	bison -d -o spellcast2/FrontEnd.tab.cpp --defines=spellcast2/FrontEnd.tab.h spellcast2/FrontEnd.y
+	flex -o spellcast2/FrontEnd.yy.cpp spellcast2/FrontEnd.l
+	clang++ `llvm-config --cppflags --ldflags --libs` spellcast2/FrontEnd.tab.cpp spellcast2/FrontEnd.yy.cpp -o spellcast2/spellcast2c.out
+
+spellcast2_bison_debug:
+	bison -Wcounterexamples -d -o spellcast2/FrontEnd.tab.cpp --defines=spellcast2/FrontEnd.tab.h spellcast2/FrontEnd.y
+
+spellcast2_emitllvm: spellcast2_frontend
+	./spellcast2/spellcast2c.out ./spellcast2/app.spell > ./spellcast2/app.ll
+
+spellcast2_build: spellcast2_emitllvm
+	clang `llvm-config --cppflags --ldflags --libs` SDL/start.c spellcast2/app.ll SDL/sim.c  -iquote /usr/include/SDL2 -lSDL2 -o out/spellcast2_brain.out
+
+spellcast2_run: spellcast2_build
+	./out/spellcast2_brain.out

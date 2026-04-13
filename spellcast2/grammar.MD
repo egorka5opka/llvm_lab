@@ -14,6 +14,7 @@ All magic is a Weave, it flows, adjust and act. To create your own powerful spel
 ### Spell slots (Variables)
 - only `int32`
 - named starting with `#`
+- set variable value with `wish <var> <expr>`
 
 ### Magic Flow
 - Magic can be whrilled in a loop. 
@@ -39,9 +40,9 @@ All magic is a Weave, it flows, adjust and act. To create your own powerful spel
 ## Basic spells
 - this spell writing system includes school of illusion with several space
 	- there is an image that can be constructed and displayed. It consists of 64x64 minor images (pixels)
-	- `minor_image <row> <col> <color>` - put pixel of color `<color>` at `<row>` `<col>` position
-	- `illusion` to display constructed illusion (flush)
+	- `minor_image <row> <col> <color>` - put pixel of color `<color>` at `<row>` `<col>` position (draw_cell from sim.h)
+	- `illusion` to display constructed illusion (flush from sim.h)
 - there is an additional magic storage for 64x64 slots 
-	- spell `crave <i> <col> <val>` to store value `val` at position `row` `col`
-	- spell `detect <i> <row <col>` to get value stored at position `row` `col`
+    - spell `crave <i> <row> <col> <val>` to store value `val` at position `row` `col` in plane `i`
+    - spell `detect <i> <row> <col>` to get value stored at position `row` `col` in plane `i`
 - a special spell to reduce amount of branching (ternary operator basicly) `focus <cond> <iftrue> <iffalse>`

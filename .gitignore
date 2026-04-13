@@ -1,2 +1,5 @@
 pass/build
 .vscode
+spellcast2/*.tab*
+spellcast2/*.yy.cpp
+spellcast2/*.yy.cpp
