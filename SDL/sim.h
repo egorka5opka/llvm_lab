@@ -6,7 +6,5 @@ void simInit();
 void app();
 void simExit();
 void simFlush();
-void simPutPixel(int x, int y, int argb);
-int simRand();
 void draw_cell(int row, int col, int color);
 #endif

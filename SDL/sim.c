@@ -59,10 +59,10 @@ void simPutPixel(int x, int y, int argb)
     Ticks = SDL_GetTicks();
 }
 
-int simRand()
-{
-    return rand();
-}
+// int simRand()
+// {
+//     return rand();
+// }
 
 #define CELL_SIZE 8
 
