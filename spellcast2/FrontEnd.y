@@ -78,11 +78,11 @@ static void ensureRuntimeDecls() {
     if (!TheModule) return;
 
     DrawCellFunc = TheModule->getOrInsertFunction(
-        "draw_cell",
+        "llvm.magic.drawcell",
         FunctionType::get(VoidTy(), {I32Ty(), I32Ty(), I32Ty()}, false));
 
     SimFlushFunc = TheModule->getOrInsertFunction(
-        "simFlush",
+        "llvm.magic.flush",
         FunctionType::get(VoidTy(), {}, false));
 
     if (!MagicStoreTy) {
